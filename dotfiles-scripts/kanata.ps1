@@ -33,26 +33,25 @@ $files | ForEach-Object {
 }
 
 # 
-# set the program to run on startup
+# create a task scheduler to run the task on login
 # 
 
-$gui = $files[-1]
-$linkPath = Join-Path ([Environment]::GetFolderPath('Startup')) "$gui - link.lnk"
+$guiPath = Join-Path $dirPath $files[-1]
 $configPath = Join-Path ([Environment]::GetFolderPath('User')) ".config\kanata.kbd"
+$action = New-ScheduledTaskAction -Execute $guiPath -Argument "-c $configPath" -WorkingDirectory $dirPath
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
 
-if (-not (Test-Path $configPath)) {
-    Write-Host "Creating kanata config file..." -ForegroundColor Yellow
-    New-Item $configPath
-    Write-Host "Created kanata config file '$configPath'"
+$taskName = 'Kanata startup'
+
+if (Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue) {
+    Write-Host "Scheduled task '$taskName' already exists. Removing it..." -ForegroundColor Yellow
+    Unregister-ScheduledTask -TaskName $taskName -Confirm
+    Write-Host "Scheduled task '$taskName' removed successfully" -ForegroundColor Green
 }
 
-Write-Host "Creating symbolic link for '$gui' in startup folder..." -ForegroundColor Yellow
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName $taskName -RunLevel Highest -Settings $settings 
 
-$WSH = New-Object -ComObject WScript.Shell
-$link = $WSH.CreateShortcut($linkPath)
-$link.TargetPath = Join-Path $dirPath $gui
-$link.WorkingDirectory = $dirPath
-$link.Arguments = "-c $configPath"
-$link.Save()
+Start-ScheduledTask -TaskName 'Kanata startup'
+Write-Host "Scheduled task '$taskName' created successfully" -ForegroundColor Green
 
-Write-Host "Symbolic link for '$gui' created successfully" -ForegroundColor Green
