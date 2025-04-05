@@ -1,0 +1,7 @@
+[plugin]
+deps = []
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "68326b4"
+hash = "800799d6ab64ece50a4e516641b96fa0"

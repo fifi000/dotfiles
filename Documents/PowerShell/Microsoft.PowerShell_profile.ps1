@@ -1,9 +1,3 @@
-# # terminal icons
-# Import-Module -Name Terminal-Icons
-
-# # oh-my-posh theme
-# oh-my-posh init pwsh --config '~/.my-theme.omp.json' | Invoke-Expression
-
 # starship theme
 Invoke-Expression (&starship init powershell)
 
@@ -37,10 +31,11 @@ Set-Alias -Name less -Value 'C:\\Program Files\\Git\\usr\\bin\\less.exe'
 # functions
 function fcd {
     param(
-        [switch]$r
+        [Alias("r")]
+        [switch]$Recurse
     )
 
-    if ($r) {
+    if ($Recurse) {
         Set-Location ((Get-ChildItem -Recurse -Force -Name | fzf))
     }
     else {
@@ -62,4 +57,14 @@ function fprev {
 
 function dotfiles {
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME $args
+}
+
+function y {
+    $tmp = [System.IO.Path]::GetTempFileName()
+    yazi $args --cwd-file="$tmp"
+    $cwd = Get-Content -Path $tmp -Encoding UTF8
+    if (-not [String]::IsNullOrEmpty($cwd) -and $cwd -ne $PWD.Path) {
+        Set-Location -LiteralPath ([System.IO.Path]::GetFullPath($cwd))
+    }
+    Remove-Item -Path $tmp
 }
