@@ -11,7 +11,8 @@ function Get-Powershell {
 # 
 
 function Get-Scoop {
-    winget install --id 'ScoopInstaller.Scoop'
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    Invoke-RestMethod -Uri 'https://get.scoop.sh' | Invoke-Expression
 }
 
 # 
@@ -87,7 +88,8 @@ function Get-Yazi {
     winget install sxyazi.yazi
     winget install Gyan.FFmpeg 7zip.7zip jqlang.jq sharkdp.fd BurntSushi.ripgrep.MSVC junegunn.fzf ajeetdsouza.zoxide ImageMagick.ImageMagick
     scoop install poppler
-
-    # run as admin !!!
+    
+    #requires -RunAsAdministrator
     [System.Environment]::SetEnvironmentVariable("YAZI_CONFIG_HOME", "~/.config/yazi", "User")
+    [System.Environment]::SetEnvironmentVariable("YAZI_FILE_ONE", "C:\Program Files\Git\usr\bin\file.exe", "User")
 }
