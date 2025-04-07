@@ -1,364 +1,380 @@
 {
-  "$help": "https://aka.ms/terminal-documentation",
-  "$schema": "https://aka.ms/terminal-profiles-schema",
-  "actions": [
-    {
-      "command": {
-        "action": "copy",
-        "singleLine": false
-      },
-      "id": "User.copy.644BA8F2"
-    },
-    {
-      "command": "paste",
-      "id": "User.paste"
-    },
-    {
-      "command": {
-        "action": "splitPane",
-        "split": "auto",
-        "splitMode": "duplicate"
-      },
-      "id": "User.splitPane.A6751878"
-    },
-    {
-      "command": "find",
-      "id": "User.find"
-    },
-    {
-      "command": {
-        "action": "closeTab"
-      },
-      "id": "User.closeTab.0"
-    }
-  ],
-  "centerOnLaunch": false,
-  "copyFormatting": "none",
-  "copyOnSelect": false,
-  "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-  "keybindings": [
-    {
-      "id": null,
-      "keys": "ctrl+shift+1"
-    },
-    {
-      "id": "User.copy.644BA8F2",
-      "keys": "ctrl+c"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+d"
-    },
-    {
-      "id": "User.find",
-      "keys": "ctrl+shift+f"
-    },
-    {
-      "id": "User.paste",
-      "keys": "ctrl+v"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+3"
-    },
-    {
-      "id": "Terminal.OpenNewTab",
-      "keys": "ctrl+n"
-    },
-    {
-      "id": "Terminal.DuplicateTab",
-      "keys": "ctrl+shift+t"
-    },
-    {
-      "id": null,
-      "keys": "alt+down"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+4"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+2"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+5"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+w"
-    },
-    {
-      "id": null,
-      "keys": "alt+shift+minus"
-    },
-    {
-      "id": null,
-      "keys": "alt+shift+plus"
-    },
-    {
-      "id": null,
-      "keys": "alt+space"
-    },
-    {
-      "id": null,
-      "keys": "alt+left"
-    },
-    {
-      "id": null,
-      "keys": "alt+right"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+left"
-    },
-    {
-      "id": "User.closeTab.0",
-      "keys": "ctrl+w"
-    },
-    {
-      "id": null,
-      "keys": "alt+up"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+6"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+7"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+8"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+9"
-    },
-    {
-      "id": null,
-      "keys": "alt+shift+down"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+space"
-    },
-    {
-      "id": null,
-      "keys": "alt+shift+left"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+1"
-    },
-    {
-      "id": null,
-      "keys": "alt+shift+right"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+5"
-    },
-    {
-      "id": null,
-      "keys": "alt+shift+up"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+2"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+9"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+3"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+4"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+7"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+6"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+alt+8"
-    },
-    {
-      "id": null,
-      "keys": "win+sc(41)"
-    },
-    {
-      "id": null,
-      "keys": "alt+enter"
-    },
-    {
-      "id": null,
-      "keys": "ctrl+shift+m"
-    },
-    {
-      "id": "Terminal.NextTab",
-      "keys": "ctrl+p"
-    }
-  ],
-  "language": "en-US",
-  "launchMode": "maximized",
-  "newTabMenu": [
-    {
-      "type": "remainingProfiles"
-    }
-  ],
-  "profiles": {
-    "defaults": {
-      "colorScheme": "One Half Dark",
-      "font": {
-        "face": "Fira Code"
-      },
-      "opacity": 80,
-      "padding": "0, 0, 0, -10",
-      "scrollbarState": "hidden",
-      "useAcrylic": true
-    },
-    "list": [
-      {
-        "colorScheme": "One Half Dark",
-        "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-        "font": {
-          "size": 18
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": 
+    [
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
         },
-        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-        "hidden": false,
-        "name": "Windows PowerShell"
-      },
-      {
-        "commandline": "%SystemRoot%\\System32\\cmd.exe",
-        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-        "hidden": false,
-        "name": "Command Prompt"
-      },
-      {
-        "colorScheme": "One Half Dark",
-        "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
-        "hidden": true,
-        "name": "Ubuntu-22.04",
-        "source": "Windows.Terminal.Wsl"
-      },
-      {
-        "bellStyle": "none",
-        "colorScheme": "One Half Dark",
-        "commandline": "C:\\Program Files\\Git\\bin\\bash.exe",
-        "guid": "{1c7151a6-ce33-49a9-bccc-e2ecbbb42e1c}",
-        "hidden": false,
-        "icon": "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
-        "name": "Git Bash",
-        "startingDirectory": "%USERPROFILE%",
-        "tabTitle": "Git Bash"
-      },
-      {
-        "bellStyle": "none",
-        "font": {
-          "size": 18
+        {
+            "command": "paste",
+            "id": "User.paste"
         },
-        "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-        "hidden": false,
-        "name": "PowerShell",
-        "opacity": 80,
-        "padding": "8, 0, 0, -10",
-        "source": "Windows.Terminal.PowershellCore",
-        "useAcrylic": true
-      },
-      {
-        "bellStyle": "none",
-        "colorScheme": "One Half Dark",
-        "commandline": "cmd.exe /c \"set MSYSTEM=UCRT64&& C:\\msys64\\usr\\bin\\bash.exe --login\"",
-        "guid": "{ad6fcf03-ca7d-4aee-a3d2-212cd8ec6720}",
-        "hidden": false,
-        "icon": "C:\\msys64\\ucrt64.ico",
-        "name": "UCRT64",
-        "startingDirectory": "%USERPROFILE%",
-        "tabTitle": "MSYS 2"
-      },
-      {
-        "bellStyle": "none",
-        "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\"",
-        "elevate": true,
-        "font": {
-          "size": 18
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.A6751878"
         },
-        "guid": "{719e0838-7a30-47f1-bf0c-b4d73cbbb775}",
-        "hidden": false,
-        "icon": "ms-appx:///ProfileIcons/pwsh.png",
-        "name": "PowerShell (Admin)",
-        "opacity": 95,
-        "padding": "8",
-        "startingDirectory": "%USERPROFILE%"
-      },
-      {
-        "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-        "hidden": false,
-        "name": "Git Bash",
-        "source": "Git"
-      }
-    ]
-  },
-  "schemes": [
+        {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
+            "command": 
+            {
+                "action": "closeTab"
+            },
+            "id": "User.closeTab.0"
+        }
+    ],
+    "alwaysShowTabs": true,
+    "centerOnLaunch": false,
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings": 
+    [
+        {
+            "id": null,
+            "keys": "ctrl+shift+1"
+        },
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+d"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+3"
+        },
+        {
+            "id": "Terminal.OpenNewTab",
+            "keys": "ctrl+n"
+        },
+        {
+            "id": "Terminal.DuplicateTab",
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "id": null,
+            "keys": "alt+down"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+4"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+2"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+5"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+minus"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": null,
+            "keys": "alt+space"
+        },
+        {
+            "id": null,
+            "keys": "alt+left"
+        },
+        {
+            "id": null,
+            "keys": "alt+right"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+left"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+w"
+        },
+        {
+            "id": null,
+            "keys": "alt+up"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+6"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+7"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+8"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+9"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+down"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+space"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+left"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+1"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+right"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+5"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+up"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+2"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+9"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+3"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+4"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+7"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+6"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+8"
+        },
+        {
+            "id": null,
+            "keys": "win+sc(41)"
+        },
+        {
+            "id": null,
+            "keys": "alt+enter"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+m"
+        },
+        {
+            "id": "Terminal.NextTab",
+            "keys": "ctrl+p"
+        }
+    ],
+    "language": "en-US",
+    "launchMode": "maximized",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
     {
-      "background": "#225780",
-      "black": "#0C0C0C",
-      "blue": "#0037DA",
-      "brightBlack": "#919191",
-      "brightBlue": "#3B78FF",
-      "brightCyan": "#61D6D6",
-      "brightGreen": "#16C60C",
-      "brightPurple": "#B4009E",
-      "brightRed": "#E74856",
-      "brightWhite": "#F2F2F2",
-      "brightYellow": "#F9F1A5",
-      "cursorColor": "#FFFFFF",
-      "cyan": "#3A96DD",
-      "foreground": "#F7F7F7",
-      "green": "#13A10E",
-      "name": "Campbell (modified)",
-      "purple": "#881798",
-      "red": "#C50F1F",
-      "selectionBackground": "#FFFFFF",
-      "white": "#CCCCCC",
-      "yellow": "#C19C00"
+        "defaults": 
+        {
+            "colorScheme": "One Half Dark",
+            "font": 
+            {
+                "face": "Fira Code"
+            },
+            "opacity": 80,
+            "padding": "0, 0, 0, -10",
+            "scrollbarState": "hidden",
+            "useAcrylic": true
+        },
+        "list": 
+        [
+            {
+                "colorScheme": "One Half Dark",
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "font": 
+                {
+                    "size": 18
+                },
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
+            },
+            {
+                "colorScheme": "One Half Dark",
+                "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
+                "hidden": true,
+                "name": "Ubuntu-22.04",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "bellStyle": "none",
+                "colorScheme": "One Half Dark",
+                "commandline": "C:\\Program Files\\Git\\bin\\bash.exe",
+                "guid": "{1c7151a6-ce33-49a9-bccc-e2ecbbb42e1c}",
+                "hidden": false,
+                "icon": "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+                "name": "Git Bash",
+                "startingDirectory": "%USERPROFILE%",
+                "tabTitle": "Git Bash"
+            },
+            {
+                "bellStyle": "none",
+                "font": 
+                {
+                    "size": 18
+                },
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "opacity": 80,
+                "padding": "8, 0, 0, -10",
+                "source": "Windows.Terminal.PowershellCore",
+                "useAcrylic": true
+            },
+            {
+                "bellStyle": "none",
+                "colorScheme": "One Half Dark",
+                "commandline": "cmd.exe /c \"set MSYSTEM=UCRT64&& C:\\msys64\\usr\\bin\\bash.exe --login\"",
+                "guid": "{ad6fcf03-ca7d-4aee-a3d2-212cd8ec6720}",
+                "hidden": false,
+                "icon": "C:\\msys64\\ucrt64.ico",
+                "name": "UCRT64",
+                "startingDirectory": "%USERPROFILE%",
+                "tabTitle": "MSYS 2"
+            },
+            {
+                "bellStyle": "none",
+                "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\"",
+                "elevate": true,
+                "font": 
+                {
+                    "size": 18
+                },
+                "guid": "{719e0838-7a30-47f1-bf0c-b4d73cbbb775}",
+                "hidden": false,
+                "icon": "ms-appx:///ProfileIcons/pwsh.png",
+                "name": "PowerShell (Admin)",
+                "opacity": 95,
+                "padding": "8",
+                "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
+            }
+        ]
     },
-    {
-      "background": "#300A24",
-      "black": "#171421",
-      "blue": "#0037DA",
-      "brightBlack": "#767676",
-      "brightBlue": "#08458F",
-      "brightCyan": "#2C9FB3",
-      "brightGreen": "#26A269",
-      "brightPurple": "#A347BA",
-      "brightRed": "#C01C28",
-      "brightWhite": "#F2F2F2",
-      "brightYellow": "#A2734C",
-      "cursorColor": "#FFFFFF",
-      "cyan": "#3A96DD",
-      "foreground": "#FFFFFF",
-      "green": "#26A269",
-      "name": "Ubuntu-22.04-ColorScheme",
-      "purple": "#881798",
-      "red": "#C21A23",
-      "selectionBackground": "#FFFFFF",
-      "white": "#CCCCCC",
-      "yellow": "#A2734C"
-    }
-  ],
-  "themes": [],
-  "useAcrylicInTabRow": false,
-  "windowingBehavior": "useExisting"
+    "schemes": 
+    [
+        {
+            "background": "#225780",
+            "black": "#0C0C0C",
+            "blue": "#0037DA",
+            "brightBlack": "#919191",
+            "brightBlue": "#3B78FF",
+            "brightCyan": "#61D6D6",
+            "brightGreen": "#16C60C",
+            "brightPurple": "#B4009E",
+            "brightRed": "#E74856",
+            "brightWhite": "#F2F2F2",
+            "brightYellow": "#F9F1A5",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3A96DD",
+            "foreground": "#F7F7F7",
+            "green": "#13A10E",
+            "name": "Campbell (modified)",
+            "purple": "#881798",
+            "red": "#C50F1F",
+            "selectionBackground": "#FFFFFF",
+            "white": "#CCCCCC",
+            "yellow": "#C19C00"
+        },
+        {
+            "background": "#300A24",
+            "black": "#171421",
+            "blue": "#0037DA",
+            "brightBlack": "#767676",
+            "brightBlue": "#08458F",
+            "brightCyan": "#2C9FB3",
+            "brightGreen": "#26A269",
+            "brightPurple": "#A347BA",
+            "brightRed": "#C01C28",
+            "brightWhite": "#F2F2F2",
+            "brightYellow": "#A2734C",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3A96DD",
+            "foreground": "#FFFFFF",
+            "green": "#26A269",
+            "name": "Ubuntu-22.04-ColorScheme",
+            "purple": "#881798",
+            "red": "#C21A23",
+            "selectionBackground": "#FFFFFF",
+            "white": "#CCCCCC",
+            "yellow": "#A2734C"
+        }
+    ],
+    "showTabsInTitlebar": true,
+    "themes": [],
+    "useAcrylicInTabRow": false,
+    "windowingBehavior": "useExisting"
 }
