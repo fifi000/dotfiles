@@ -11,18 +11,20 @@ Set-PSReadLineKeyHandler -Chord 'shift+tab' -ScriptBlock {
 
     # $content = Get-Content -Tail 2048 (Get-PSReadLineOption).HistorySavePath 
     $content = Get-Content (Get-PSReadLineOption).HistorySavePath
-    
+
     $fzfInput = $content
-    | ForEach-Object { [PSCustomObject]@{ Line = $_; Index = $Global:i++ } } 
+    | ForEach-Object { [PSCustomObject]@{ Line = $_; Index = $Global:i++ } }
     | Sort-Object -Property Index -Descending
     | ForEach-Object { $_.Line }
     | Select-Object -Unique
 
     $command = $fzfInput | fzf.exe --ansi --height=40% --reverse --border --query=$line
 
+    [Microsoft.PowerShell.PSConsoleReadLine]::DeleteLine()
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert($command)
 }
 
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # aliases
 Set-Alias -Name vim -Value nvim
