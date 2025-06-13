@@ -70,3 +70,70 @@ function y {
     }
     Remove-Item -Path $tmp
 }
+
+function ask {
+    param(
+        [Parameter(Mandatory = $true, Position = 0, ValueFromRemainingArguments = $true)]        
+        [Alias("q")]
+        [string]$Question,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet('sonar', 'sonar-pro')]
+        [Alias("m")]
+        [string]$Model = 'sonar',
+        
+        [Parameter(Mandatory = $false)]
+        [int]$MaxTokens = 2048,
+        
+        [Parameter(Mandatory = $false)]
+        [Alias("t")]
+        [double]$Temperature = 0.5,
+        
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("low", "medium", "high")]
+        [string]$ReasoningEffort = "medium"
+    )
+
+    $api_url = 'https://api.perplexity.ai'
+    $completions_url = "$api_url/chat/completions"
+
+    $auth_token = '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'
+
+    $system_prompt = @'
+You are a helpful assistant. Answer the users question to the best of your ability.
+Your answers should be concise and to the point. Your responses should be fit for a terminal interface.
+'@
+
+    $headers = @{
+        'Authorization' = "Bearer $auth_token"
+        'Content-Type'  = 'application/json'
+    }
+
+    $messages = @(
+        @{
+            'role'    = 'system'
+            'content' = $system_prompt
+        },
+        @{
+            'role'    = 'user'
+            'content' = $Question
+        }
+    )
+
+    $body = @{
+        'model'            = $Model
+        'messages'         = $messages
+        'max_tokens'       = $MaxTokens
+        'temperature'      = $Temperature
+        'reasoning_effort' = $ReasoningEffort
+    } | ConvertTo-Json -Depth 10
+
+    try {
+        $response = Invoke-RestMethod -Uri $completions_url -Method Post -Headers $headers -Body $body -ErrorAction Stop
+
+        Write-Host $response.choices[0].message.content
+    }
+    catch {
+        Write-Error "An error occurred: $_"
+    }    
+}
