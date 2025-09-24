@@ -13,3 +13,12 @@ function Get-Python {
 function Get-Dotnet {
     winget install --id 'Microsoft.DotNet.SDK.9'
 }
+
+################
+## Install all
+################
+
+function Install-AllLanguages {
+    Get-Python
+    Get-Dotnet
+}

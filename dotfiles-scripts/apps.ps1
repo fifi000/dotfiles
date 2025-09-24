@@ -7,11 +7,11 @@ function Get-Terminal {
 }
 
 # 
-# Brave
+# Zen 
 # 
 
-function Get-Brave {
-    winget install --id 'Brave.Brave'
+function Get-Zen {
+    winget install --id 'Zen-Team.Zen-Browser'
 }
 
 # 
@@ -20,14 +20,6 @@ function Get-Brave {
 
 function Get-Neovim {
     winget install --id 'Neovim.Neovim'
-}
-
-# 
-# Bitwarden
-# 
-
-function Get-Bitwarden {
-    winget install --id 'Bitwarden.Bitwarden'
 }
 
 # 
@@ -51,7 +43,7 @@ function Get-VSCode {
 # 
 
 function Get-Monitorian {
-    winget install Monitorian -s msstore
+    winget install --id 'emoacht.Monitorian'
 }
 
 # 
@@ -60,4 +52,27 @@ function Get-Monitorian {
 
 function Get-Spotify {
     winget install --id 'Spotify.Spotify'
+}
+
+# 
+# flux
+# 
+
+function Get-Flux {
+    winget install --id 'Flux.Flux'
+}
+
+################
+## Install all
+################
+
+function Install-AllApps {
+    Get-Terminal
+    Get-Zen
+    Get-Neovim
+    Get-PowerToys
+    Get-VSCode
+    Get-Monitorian
+    Get-Spotify
+    Get-Flux
 }
