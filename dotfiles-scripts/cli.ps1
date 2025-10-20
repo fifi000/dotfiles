@@ -4,6 +4,10 @@
 
 function Get-Git {
     winget install --id 'Git.Git'
+
+    git config --global user.email 'filipkociok@gmail.com'
+    git config --global user.name 'feefee'
+    git config --global core.editor 'code --wait'
 }
 
 # 
