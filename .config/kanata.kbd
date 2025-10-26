@@ -2,7 +2,7 @@
   windows-altgr cancel-lctl-press ;; remove the lctl press that comes as a combo with ralt
 )
 
-(defsrc  ;; intentionally exlcudes `lctl` and `ralt` due to non US keyboard layout
+(defsrc  ;; intentionally excludes `lctl` and `ralt` due to non US keyboard layout
   esc    1      2      3      4      5      6      7      8      9      0      -      =      bspc
   tab    q      w      e      r      t      y      u      i      o      p      [      ]      \
   caps   a      s      d      f      g      h      j      k      l      ;      '      ret
