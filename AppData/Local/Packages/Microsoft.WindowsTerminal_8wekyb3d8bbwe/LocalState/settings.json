@@ -16,6 +16,10 @@
             "id": "User.paste"
         },
         {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -23,10 +27,6 @@
                 "splitMode": "duplicate"
             },
             "id": "User.splitPane.A6751878"
-        },
-        {
-            "command": "find",
-            "id": "User.find"
         },
         {
             "command": 
@@ -41,6 +41,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "focusFollowMouse": true,
     "keybindings": 
     [
         {
@@ -48,32 +49,24 @@
             "keys": "ctrl+shift+1"
         },
         {
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
-        },
-        {
             "id": null,
             "keys": "ctrl+shift+d"
         },
         {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
         },
         {
             "id": "User.paste",
             "keys": "ctrl+v"
         },
         {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
             "id": null,
             "keys": "ctrl+shift+3"
-        },
-        {
-            "id": "Terminal.OpenNewTab",
-            "keys": "ctrl+n"
-        },
-        {
-            "id": "Terminal.DuplicateTab",
-            "keys": "ctrl+shift+t"
         },
         {
             "id": null,
@@ -84,12 +77,16 @@
             "keys": "ctrl+shift+4"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+2"
+            "id": "Terminal.DuplicateTab",
+            "keys": "ctrl+shift+t"
         },
         {
             "id": null,
             "keys": "ctrl+shift+5"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+2"
         },
         {
             "id": null,
@@ -101,11 +98,11 @@
         },
         {
             "id": null,
-            "keys": "alt+shift+plus"
+            "keys": "alt+space"
         },
         {
             "id": null,
-            "keys": "alt+space"
+            "keys": "alt+shift+plus"
         },
         {
             "id": null,
@@ -116,12 +113,12 @@
             "keys": "alt+right"
         },
         {
-            "id": null,
-            "keys": "ctrl+alt+left"
-        },
-        {
             "id": "User.closeTab.0",
             "keys": "ctrl+w"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+left"
         },
         {
             "id": null,
@@ -153,15 +150,11 @@
         },
         {
             "id": null,
-            "keys": "alt+shift+left"
-        },
-        {
-            "id": null,
             "keys": "ctrl+alt+1"
         },
         {
             "id": null,
-            "keys": "alt+shift+right"
+            "keys": "alt+shift+left"
         },
         {
             "id": null,
@@ -169,11 +162,11 @@
         },
         {
             "id": null,
-            "keys": "alt+shift+up"
+            "keys": "alt+shift+right"
         },
         {
             "id": null,
-            "keys": "ctrl+alt+2"
+            "keys": "alt+shift+up"
         },
         {
             "id": null,
@@ -181,15 +174,23 @@
         },
         {
             "id": null,
+            "keys": "ctrl+alt+2"
+        },
+        {
+            "id": null,
             "keys": "ctrl+alt+3"
         },
         {
             "id": null,
-            "keys": "ctrl+alt+4"
+            "keys": "ctrl+shift+n"
         },
         {
             "id": null,
             "keys": "ctrl+alt+7"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+alt+4"
         },
         {
             "id": null,
@@ -214,6 +215,14 @@
         {
             "id": "Terminal.NextTab",
             "keys": "ctrl+p"
+        },
+        {
+            "id": "Terminal.OpenNewTab",
+            "keys": "ctrl+t"
+        },
+        {
+            "id": "Terminal.OpenNewWindow",
+            "keys": "ctrl+n"
         }
     ],
     "language": "en-US",
@@ -277,13 +286,14 @@
             },
             {
                 "bellStyle": "none",
+                "commandline": "\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -NoLogo",
                 "font": 
                 {
-                    "size": 18
+                    "size": 14
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
-                "name": "PowerShell",
+                "name": "Pwsh",
                 "opacity": 80,
                 "padding": "8, 0, 0, -10",
                 "source": "Windows.Terminal.PowershellCore",
@@ -321,6 +331,12 @@
                 "hidden": false,
                 "name": "Git Bash",
                 "source": "Git"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": false,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
             }
         ]
     },
@@ -373,8 +389,11 @@
             "yellow": "#A2734C"
         }
     ],
+    "searchWebDefaultQueryUrl": "https://search.brave.com/search?q=%22%s%22",
     "showTabsInTitlebar": true,
+    "tabWidthMode": "equal",
     "themes": [],
-    "useAcrylicInTabRow": false,
+    "useAcrylicInTabRow": true,
+    "warning.multiLinePaste": false,
     "windowingBehavior": "useExisting"
 }
