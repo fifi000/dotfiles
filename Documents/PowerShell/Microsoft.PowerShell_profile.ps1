@@ -98,7 +98,10 @@ function ask {
     $api_url = 'https://api.perplexity.ai'
     $completions_url = "$api_url/chat/completions"
 
-    $auth_token = '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'
+    $auth_token = ''
+    if ($auth_token -eq '') {
+        throw 'Must set the api token'
+    }
 
     $system_prompt = @'
 You are a helpful assistant. Answer the users question to the best of your ability.
@@ -282,4 +285,19 @@ function Set-SonetaSolution {
 
     $csprojPath = Get-ChildItem -Recurse -Filter "*.csproj" | Select-Object -First 1
     dotnet.exe sln add $csprojPath.FullName
+}
+
+function Copy-FilesToClipboard {
+    param(
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string[]]$Path
+    )
+    Add-Type -AssemblyName System.Windows.Forms
+
+    $files = New-Object System.Collections.Specialized.StringCollection
+    foreach ($p in $Path) {
+        $full = (Resolve-Path $p).ProviderPath
+        [void]$files.Add($full)
+    }
+    [System.Windows.Forms.Clipboard]::SetFileDropList($files)
 }
