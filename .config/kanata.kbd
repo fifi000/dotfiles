@@ -13,28 +13,38 @@
 (deflayer default
   esc    1      2      3      4      5      6      7      8      9      0      -      =      bspc
   tab    q      w      e      r      t      y      u      i      o      p      [      ]      \
-  @mod   a      s      d      f      g      h      j      k      l      ;      '      ret
+  @mod   @a_mod @s_mod @d_mod @f_mod g      h      @j_mod @k_mod @l_mod @;_mod '      ret
   @cpoff z      x      c      v      b      n      m      ,      .      /      @cpon
-         lmet   lalt                 @ctrl_space                 @mod   rctl
+         lmet   lalt                 @space_mod                  @menu_mod rctl
 )
 
 (deflayer special
   grv    f1     f2     f3     f4     f5     f6     f7     f8     f9     f10    f11    f12    del
-  _      _      up     _      _      _      _      @lwj   up     @rwj   _      home   end    _
-  _      lft    down   rght   _      _      home   lft    down   rght   end    _      _
-  _      _      _      _      _      _      _      _      _      _      del    _
-         _      _                    @ctrl_space                 _      _
+  _      _      _      _      _      _      home   pgdn   pgup   end    _      _      _      _
+  _      _      _      _      _      _      lft    down   up     rght   _      _      _
+  _      _      _      _      _      _      _      _      bspc   del    _      _
+         _      _                    _                           _      _
 )
 
 (defalias
-  lwj (multi rctl lft)                ;; word jump left - right
-  rwj (multi rctl rght)               ;; word jump right - left 
+  ;; capslock - leftshift + rightshift
+  cpon (fork rsft caps (lsft))
+  cpoff (fork lsft caps (rsft))
+  
+  ;; mods
+  mod (layer-while-held special)
+  space_mod (tap-hold 100 200 spc @mod)
+  menu_mod (tap-hold 100 200 menu @mod)
 
-  cpon (fork rsft caps (lsft))        ;; turn on capslock - leftshift + rightshift
-  cpoff (fork lsft caps (rsft))       ;; turn off capslock - rightshift + leftshift
-     
-  spl (layer-while-held special)
-  mod (tap-hold 50 50 nop0 @spl)
-        
-  ctrl_space (tap-hold 100 200 spc lctl)  ;; space when tapped, leftctrl when held
+  ;; home row mod
+  ;;;; left hand
+  a_mod (tap-hold 50 200 a lmet)
+  s_mod (tap-hold 50 200 s lalt)
+  d_mod (tap-hold 50 200 d lsft)
+  f_mod (tap-hold 50 200 f rctl)
+  ;;;; right hand
+  j_mod (tap-hold 50 200 j rctl)
+  k_mod (tap-hold 50 200 k rsft)
+  l_mod (tap-hold 50 200 l lalt)
+  ;_mod (tap-hold 50 200 ; rmet)
 )
