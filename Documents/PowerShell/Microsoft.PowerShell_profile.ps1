@@ -30,6 +30,7 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name less -Value 'C:\\Program Files\\Git\\usr\\bin\\less.exe'
 
+
 # functions
 function fcd {
     param(
@@ -38,10 +39,10 @@ function fcd {
     )
 
     if ($Recurse) {
-        Set-Location ((Get-ChildItem -Recurse -Force -Name | fzf))
+        Set-Location (Get-ChildItem -Recurse -Force -Name | fzf)
     }
     else {
-        Set-Location ((Get-ChildItem -Name | fzf))
+        Set-Location (Get-ChildItem -Name | fzf)
     }
 }
 
@@ -136,4 +137,149 @@ Your answers should be concise and to the point. Your responses should be fit fo
     catch {
         Write-Error "An error occurred: $_"
     }    
+}
+
+function dbmgr {
+    # find newest Enova version
+    $folder = Get-ChildItem 'C:\Enova Multi' | Sort-Object -Descending -Top 1
+
+    # find dbmgr.exe
+    $dbmgrPath = if (Get-Command fd.exe) {
+        fd.exe 'dbmgr.exe' $folder | Sort-Object -Top 1
+    }
+    else {
+        Get-ChildItem -Recurse -Name -Filter '*dbmgr.exe' $folder
+    }    
+
+    if (-not $dbmgrPath) {
+        throw "dbmgr.exe not found"
+    }
+
+    & $dbmgrPath $args
+}
+
+function Get-EnovaDbVersions {
+    param(
+        [int]$ThrottleLimit = 5
+    )
+    $dbs = dbmgr list -o json | ConvertFrom-Json
+    
+    $dbs | Foreach-Object -Parallel {
+        function dbmgr {
+            # find newest version
+            $folder = Get-ChildItem 'C:\Enova Multi' | Sort-Object -Descending -Top 1
+
+            # find dbmgr.exe
+            $dbmgrPath = if (Get-Command fd.exe -ErrorAction SilentlyContinue) {
+                fd.exe 'dbmgr.exe' $folder | Sort-Object -Top 1
+            }
+            else {
+                Get-ChildItem -Recurse -Filter '*dbmgr.exe' $folder | ForEach-Object { $_.FullName }
+            }    
+
+            if (-not $dbmgrPath) {
+                throw "dbmgr.exe not found"
+            }
+
+            & $dbmgrPath $args
+        }
+
+        try {
+            $status = dbmgr status $_.Name -o json | ConvertFrom-Json
+            
+            return [PSCustomObject]@{
+                Name    = $status.Database
+                Version = $status.DatabaseVersions.system
+            }
+        }
+        catch {
+            $status = [PSCustomObject]@{
+                Name    = $_.Name
+                Version = "(unknown)"
+            }
+        }
+
+    } -ThrottleLimit $ThrottleLimit
+}
+
+function Set-SonetaSolution {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Name,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Sdk = "1.1.5",
+        
+        [Parameter(Mandatory = $false)]
+        [string]$EnovaVersion = "2506.0.0",
+        
+        [Parameter(Mandatory = $false)]
+        [string]$DotnetVersion = "net8"
+    )
+
+    # assert in ~/dev/
+    $devPath = Join-Path -Path $HOME -ChildPath "dev"
+    if ($PWD.Path -ne $devPath) {
+        throw "You must be in '$devPath' to create a new Soneta solution."
+    }
+
+    if (-not $Name) {
+        throw "Solution name is required."
+    }
+
+    # 
+    # create new solution
+    # 
+
+    New-Item -Path $Name -ItemType Directory | Out-Null
+    Set-Location $Name
+
+    dotnet.exe new sln
+
+    # 
+    # add solution items
+    # 
+
+    ## global.json
+    New-Item -Path "global.json" -ItemType File -Force | Out-Null
+    Set-Content -Path "global.json" -Value (@{
+            "msbuild-sdks" = @{
+                "Soneta.Sdk" = $Sdk
+            }
+        } | ConvertTo-Json) -Encoding utf8
+
+    ## Directory.Build.props
+    New-Item -Path "Directory.Build.props" -ItemType File -Force | Out-Null    
+    Set-Content -Path "Directory.Build.props" -Value @(
+        '<?xml version="1.0" encoding="utf-8"?>'
+        '<Project ToolsVersion="14.0">'
+        '  <PropertyGroup>'
+        "    <SonetaPackageVersion>$EnovaVersion</SonetaPackageVersion>"
+        "    <SonetaTargetFramework>$DotnetVersion</SonetaTargetFramework>"
+        '  </PropertyGroup>'
+        '</Project>'
+    ) -Encoding utf8
+
+    $solutionProject = @(
+        'MinimumVisualStudioVersion = 10.0.40219.1'
+        'Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"'
+        '    ProjectSection(SolutionItems) = preProject'
+        '        global.json = global.json'
+        '        Directory.Build.props = Directory.Build.props'
+        '    EndProjectSection'
+        'EndProject'
+    )
+    
+    $slnName = "$Name.sln"
+    (Get-Content $slnName) -replace "^MinimumVisualStudioVersion.*`$" , ($solutionProject -join "`n")
+    | Set-Content -Path $slnName -Encoding utf8
+
+    # 
+    # add project
+    #
+
+    dotnet.exe new soneta-addon-project
+
+    $csprojPath = Get-ChildItem -Recurse -Filter "*.csproj" | Select-Object -First 1
+    dotnet.exe sln add $csprojPath.FullName
 }
