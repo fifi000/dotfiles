@@ -15,20 +15,12 @@
 ;; =          layers             =
 ;; = = = = = = = = = = = = = = = = 
 
-;; (deflayer default
-;;   esc    1      2      3      4      5      6      7      8         9         0      -      =      bspc
-;;   tab    q      w      e      r      t      y      u      i         o         p      [      ]      \
-;;   @mod   @a_mod @s_mod @d_mod @f_mod g      h      @j_mod @k_mod    @l_mod    @;_mod '      ret
-;;   @cpoff z      x      c      v      b      n      m      ,         .         /      @cpon
-;;          lmet   lalt                 @space_mod           @ralt_mod @menu_mod rctl
-;; )
-
-(deflayer learning
-  esc    1      2      3      4      5      6      7      8         9         0      -      =      XX
+(deflayer default
+  esc    1      2      3      4      5      6      7      8         9         0      -      =      bspc
   tab    q      w      e      r      t      y      u      i         o         p      [      ]      \
   @mod   @a_mod @s_mod @d_mod @f_mod g      h      @j_mod @k_mod    @l_mod    @;_mod '      ret
-  XX     z      x      c      v      b      n      m      ,         .         /      XX
-         lmet   XX                   @space_mod           @ralt_mod @menu_mod rctl
+  @cpoff z      x      c      v      b      n      m      ,         .         /      @cpon
+         lmet   lalt                 @space_mod           @ralt_mod @menu_mod rctl
 )
 
 (deflayer ralr-layer
@@ -60,9 +52,6 @@
   mod (layer-while-held special)
   space_mod (tap-hold-release 100 200 spc @mod)
   menu_mod (tap-hold-release 100 200 menu @mod)
-
-  ;; learining layer
-
 )
 
 ;; = = = = = = = = = = = = = = = = 
@@ -71,7 +60,7 @@
 
 (defvar
   tap-timeout 200
-  hold-timeout 200
+  hold-timeout 300
 )
 
 (defalias
@@ -80,14 +69,14 @@
   ralt_mod (multi ralt (layer-while-held ralr-layer))
 
   ;; left hand
-  a_mod (tap-hold-release $tap-timeout $hold-timeout a lmet)
-  s_mod (tap-hold-release $tap-timeout $hold-timeout s lalt)
-  d_mod (tap-hold-release $tap-timeout $hold-timeout d lsft)
-  f_mod (tap-hold-release $tap-timeout $hold-timeout f rctl)
+  a_mod (tap-hold $tap-timeout $hold-timeout a lmet)
+  s_mod (tap-hold $tap-timeout $hold-timeout s lalt)
+  d_mod (tap-hold $tap-timeout $hold-timeout d lsft)
+  f_mod (tap-hold $tap-timeout $hold-timeout f rctl)
   
   ;; right hand
-  j_mod (tap-hold-release $tap-timeout $hold-timeout j rctl)
-  k_mod (tap-hold-release $tap-timeout $hold-timeout k rsft)
-  l_mod (tap-hold-release $tap-timeout $hold-timeout l lalt)
-  ;_mod (tap-hold-release $tap-timeout $hold-timeout ; rmet)
+  j_mod (tap-hold $tap-timeout $hold-timeout j rctl)
+  k_mod (tap-hold $tap-timeout $hold-timeout k rsft)
+  l_mod (tap-hold $tap-timeout $hold-timeout l lalt)
+  ;_mod (tap-hold $tap-timeout $hold-timeout ; lmet)
 )
