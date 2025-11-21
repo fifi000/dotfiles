@@ -237,8 +237,8 @@
     {
         "defaults": 
         {
-            "backgroundImage": null,
-            "backgroundImageOpacity": 0.05,
+            "backgroundImage": "C:\\Users\\filip\\.config\\bg.png",
+            "backgroundImageOpacity": 1,
             "bellStyle": "none",
             "colorScheme": "One Half Dark",
             "font": 
