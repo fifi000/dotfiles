@@ -10,26 +10,26 @@ function Get-Git {
     git config --global core.editor 'code --wait'
 }
 
-# 
+#
 # Powershell
-# 
+#
 
 function Get-Powershell {
-    winget install --id 'Microsoft.PowerShell'
+    winget install --id 'Microsoft.PowerShell' --source winget
 }
 
-# 
+#
 # Scoop
-# 
+#
 
 function Get-Scoop {
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-RestMethod -Uri 'https://get.scoop.sh' | Invoke-Expression
 }
 
-# 
+#
 # FiraCode
-# 
+#
 
 function Get-FiraCode {
     scoop bucket add nerd-fonts
@@ -41,7 +41,7 @@ function Get-FiraCode {
 #
 
 function Get-RipGrep {
-    winget install --id 'BurntSushi.ripgrep.MSVC'
+    winget install --id 'BurntSushi.ripgrep.MSVC' --source winget
 }
 
 #
@@ -49,7 +49,7 @@ function Get-RipGrep {
 #
 
 function Get-Fzf {
-    winget install --id 'junegunn.fzf'
+    winget install --id 'junegunn.fzf' --source winget
 }
 
 #
@@ -57,7 +57,7 @@ function Get-Fzf {
 #
 
 function Get-Bat {
-    winget install --id 'sharkdp.bat'
+    winget install --id 'sharkdp.bat' --source winget
 }
 
 #
@@ -78,7 +78,7 @@ function Get-Tldr {
 #
 
 function Get-GithubCli {
-    winget install --id 'GitHub.cli'
+    winget install --id 'GitHub.cli' --source winget
 }
 
 
@@ -87,19 +87,19 @@ function Get-GithubCli {
 #
 
 function Get-Starship {
-    winget install --id 'Starship.Starship'
+    winget install --id 'Starship.Starship' --source winget
 }
 
-# 
+#
 # yazi
-# 
+#
 function Get-Yazi {
-    winget install sxyazi.yazi
-    winget install Gyan.FFmpeg 7zip.7zip jqlang.jq sharkdp.fd BurntSushi.ripgrep.MSVC junegunn.fzf ajeetdsouza.zoxide ImageMagick.ImageMagick
+    winget install sxyazi.yazi --source winget
+    winget install Gyan.FFmpeg 7zip.7zip jqlang.jq sharkdp.fd BurntSushi.ripgrep.MSVC junegunn.fzf ajeetdsouza.zoxide ImageMagick.ImageMagick --source winget
     scoop install poppler
-    
+
     $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
-    
+
     if (-not $isAdmin) {
         Start-Process pwsh -ArgumentList "-Command", "[System.Environment]::SetEnvironmentVariable('YAZI_CONFIG_HOME', '~/.config/yazi', 'User'); [System.Environment]::SetEnvironmentVariable('YAZI_FILE_ONE', 'C:\Program Files\Git\usr\bin\file.exe', 'User')" -Verb RunAs
     }
