@@ -1,4 +1,4 @@
-(defcfg 
+(defcfg
   windows-altgr cancel-lctl-press ;; remove the lctl press that comes as a combo with ralt
   process-unmapped-keys yes
 )
@@ -11,9 +11,9 @@
          lmet   lalt                 spc                  ralt      menu      rctl
 )
 
-;; = = = = = = = = = = = = = = = = 
+;; = = = = = = = = = = = = = = = =
 ;; =          layers             =
-;; = = = = = = = = = = = = = = = = 
+;; = = = = = = = = = = = = = = = =
 
 (deflayer default
   esc    1      2      3      4      5      6      7      8         9         0      -      =      bspc
@@ -39,24 +39,24 @@
          _      _                    _                    _         _         _
 )
 
-;; = = = = = = = = = = = = = = = = 
+;; = = = = = = = = = = = = = = = =
 ;; =       simple mods           =
-;; = = = = = = = = = = = = = = = = 
+;; = = = = = = = = = = = = = = = =
 
 (defalias
   ;; capslock - leftshift + rightshift
   cpon (fork rsft caps (lsft))
   cpoff (fork lsft caps (rsft))
-  
+
   ;; mods
   mod (layer-while-held special)
   space_mod (tap-hold-release 100 200 spc @mod)
   menu_mod (tap-hold-release 100 200 menu @mod)
 )
 
-;; = = = = = = = = = = = = = = = = 
+;; = = = = = = = = = = = = = = = =
 ;; =       home row mods         =
-;; = = = = = = = = = = = = = = = = 
+;; = = = = = = = = = = = = = = = =
 
 (defvar
   tap-timeout 200
@@ -73,7 +73,7 @@
   s_mod (tap-hold $tap-timeout $hold-timeout s lalt)
   d_mod (tap-hold $tap-timeout $hold-timeout d lsft)
   f_mod (tap-hold $tap-timeout $hold-timeout f rctl)
-  
+
   ;; right hand
   j_mod (tap-hold $tap-timeout $hold-timeout j rctl)
   k_mod (tap-hold $tap-timeout $hold-timeout k rsft)
