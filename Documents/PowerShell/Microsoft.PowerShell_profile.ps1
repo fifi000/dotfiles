@@ -9,16 +9,8 @@ Set-PSReadLineKeyHandler -Chord 'shift+tab' -ScriptBlock {
     $cursor = $null
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
-    # $content = Get-Content -Tail 2048 (Get-PSReadLineOption).HistorySavePath 
-    $content = Get-Content (Get-PSReadLineOption).HistorySavePath
-
-    $fzfInput = $content
-    | ForEach-Object { [PSCustomObject]@{ Line = $_; Index = $Global:i++ } }
-    | Sort-Object -Property Index -Descending
-    | ForEach-Object { $_.Line }
-    | Select-Object -Unique
-
-    $command = $fzfInput | fzf.exe --ansi --height=40% --reverse --border --query=$line
+    # Get-Content (Get-PSReadLineOption).HistorySavePath
+    $command = tac (Get-PSReadLineOption).HistorySavePath | fzf.exe --ansi --height=40% --reverse --border --query=$line
 
     [Microsoft.PowerShell.PSConsoleReadLine]::DeleteLine()
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert($command)
@@ -29,6 +21,7 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 # aliases
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name less -Value 'C:\\Program Files\\Git\\usr\\bin\\less.exe'
+Set-Alias -Name tac -Value 'C:\\Program Files\\Git\\usr\\bin\\tac.exe'
 
 
 # functions
@@ -72,76 +65,6 @@ function y {
     Remove-Item -Path $tmp
 }
 
-function ask {
-    param(
-        [Parameter(Mandatory = $true, Position = 0, ValueFromRemainingArguments = $true)]        
-        [Alias("q")]
-        [string]$Question,
-
-        [Parameter(Mandatory = $false)]
-        [ValidateSet('sonar', 'sonar-pro')]
-        [Alias("m")]
-        [string]$Model = 'sonar',
-        
-        [Parameter(Mandatory = $false)]
-        [int]$MaxTokens = 2048,
-        
-        [Parameter(Mandatory = $false)]
-        [Alias("t")]
-        [double]$Temperature = 0.5,
-        
-        [Parameter(Mandatory = $false)]
-        [ValidateSet("low", "medium", "high")]
-        [string]$ReasoningEffort = "medium"
-    )
-
-    $api_url = 'https://api.perplexity.ai'
-    $completions_url = "$api_url/chat/completions"
-
-    $auth_token = ''
-    if ($auth_token -eq '') {
-        throw 'Must set the api token'
-    }
-
-    $system_prompt = @'
-You are a helpful assistant. Answer the users question to the best of your ability.
-Your answers should be concise and to the point. Your responses should be fit for a terminal interface.
-'@
-
-    $headers = @{
-        'Authorization' = "Bearer $auth_token"
-        'Content-Type'  = 'application/json'
-    }
-
-    $messages = @(
-        @{
-            'role'    = 'system'
-            'content' = $system_prompt
-        },
-        @{
-            'role'    = 'user'
-            'content' = $Question
-        }
-    )
-
-    $body = @{
-        'model'            = $Model
-        'messages'         = $messages
-        'max_tokens'       = $MaxTokens
-        'temperature'      = $Temperature
-        'reasoning_effort' = $ReasoningEffort
-    } | ConvertTo-Json -Depth 10
-
-    try {
-        $response = Invoke-RestMethod -Uri $completions_url -Method Post -Headers $headers -Body $body -ErrorAction Stop
-
-        Write-Host $response.choices[0].message.content
-    }
-    catch {
-        Write-Error "An error occurred: $_"
-    }    
-}
-
 function dbmgr {
     # find newest Enova version
     $folder = Get-ChildItem 'C:\Enova Multi' | Sort-Object -Descending -Top 1
@@ -152,7 +75,7 @@ function dbmgr {
     }
     else {
         Get-ChildItem -Recurse -Name -Filter '*dbmgr.exe' $folder
-    }    
+    }
 
     if (-not $dbmgrPath) {
         throw "dbmgr.exe not found"
@@ -166,7 +89,7 @@ function Get-EnovaDbVersions {
         [int]$ThrottleLimit = 5
     )
     $dbs = dbmgr list -o json | ConvertFrom-Json
-    
+
     $dbs | Foreach-Object -Parallel {
         function dbmgr {
             # find newest version
@@ -178,7 +101,7 @@ function Get-EnovaDbVersions {
             }
             else {
                 Get-ChildItem -Recurse -Filter '*dbmgr.exe' $folder | ForEach-Object { $_.FullName }
-            }    
+            }
 
             if (-not $dbmgrPath) {
                 throw "dbmgr.exe not found"
@@ -189,7 +112,7 @@ function Get-EnovaDbVersions {
 
         try {
             $status = dbmgr status $_.Name -o json | ConvertFrom-Json
-            
+
             return [PSCustomObject]@{
                 Name    = $status.Database
                 Version = $status.DatabaseVersions.system
@@ -211,11 +134,11 @@ function Set-SonetaSolution {
         [string]$Name,
 
         [Parameter(Mandatory = $false)]
-        [string]$Sdk = "1.1.5",
-        
+        [string]$Sdk = "1.1.6",
+
         [Parameter(Mandatory = $false)]
         [string]$EnovaVersion = "2506.0.0",
-        
+
         [Parameter(Mandatory = $false)]
         [string]$DotnetVersion = "net8"
     )
@@ -230,18 +153,18 @@ function Set-SonetaSolution {
         throw "Solution name is required."
     }
 
-    # 
+    #
     # create new solution
-    # 
+    #
 
     New-Item -Path $Name -ItemType Directory | Out-Null
     Set-Location $Name
 
     dotnet.exe new sln
 
-    # 
+    #
     # add solution items
-    # 
+    #
 
     ## global.json
     New-Item -Path "global.json" -ItemType File -Force | Out-Null
@@ -252,7 +175,7 @@ function Set-SonetaSolution {
         } | ConvertTo-Json) -Encoding utf8
 
     ## Directory.Build.props
-    New-Item -Path "Directory.Build.props" -ItemType File -Force | Out-Null    
+    New-Item -Path "Directory.Build.props" -ItemType File -Force | Out-Null
     Set-Content -Path "Directory.Build.props" -Value @(
         '<?xml version="1.0" encoding="utf-8"?>'
         '<Project ToolsVersion="14.0">'
@@ -272,24 +195,163 @@ function Set-SonetaSolution {
         '    EndProjectSection'
         'EndProject'
     )
-    
+
     $slnName = "$Name.sln"
     (Get-Content $slnName) -replace "^MinimumVisualStudioVersion.*`$" , ($solutionProject -join "`n")
     | Set-Content -Path $slnName -Encoding utf8
 
-    # 
+    #
     # add project
     #
 
-    dotnet.exe new soneta-addon-project
+    dotnet.exe new soneta-addon --force
 
     $csprojPath = Get-ChildItem -Recurse -Filter "*.csproj" | Select-Object -First 1
     dotnet.exe sln add $csprojPath.FullName
 }
 
+function Start-SonetaExplorer {
+    param(
+        [Parameter(Mandatory = $true)]
+        [Alias("v")]
+        [string]$EnovaVersion,
+        [Parameter(Mandatory = $false)]
+        [switch]$WithoutCodeEval,
+
+        # standard parameters
+        [Parameter(Mandatory = $false)]
+        [switch]$NoDebug,
+        [Parameter(Mandatory = $false)]
+        [string]$Database = $null,
+        [Parameter(Mandatory = $false)]
+        [string]$Operator = "Administrator",
+        [Parameter(Mandatory = $false)]
+        [string[]]$Ext,
+        [Parameter(Mandatory = $false)]
+        [string[]]$ExtPath,
+        [Parameter(Mandatory = $false)]
+        [string[]]$ExtPathAll,
+        [Parameter(Mandatory = $false)]
+        [switch]$NoDbExtensions,
+        [Parameter(Mandatory = $false)]
+        [string]$Folder
+    )
+
+    if (-not $Database) {
+        $Database = $EnovaVersion
+    }
+
+    $sonetaExplorer = Get-ChildItem 'C:\Program Files (x86)\Soneta\'
+    | Where-Object { $_.Name.StartsWith("enova365 $EnovaVersion") }
+    | Sort-Object -Descending
+    | Select-Object -First 1
+
+    if (-not $sonetaExplorer) {
+        throw "Soneta Explorer for Enova version '$EnovaVersion' not found."
+    }
+
+    $exePath = Join-Path -Path $sonetaExplorer.FullName -ChildPath "sonetaexplorer.exe"
+
+    if (-not (Test-Path -Path $exePath)) {
+        throw "sonetaexplorer.exe not found in '$($sonetaExplorer.FullName)'."
+    }
+
+    $paramList = @(
+        "--database", $Database,
+        "--operator", $Operator
+    )
+    if (-not $NoDebug) {
+        $paramList += "--debug"
+    }
+    if ($Folder) {
+        $paramList += "--folder"
+        $paramList += $Folder
+    }
+    if ($ExtPath) {
+        foreach ($path in $ExtPath) {
+            $dlls = Get-ChildItem -Path $path -Filter "*.dll"
+            foreach ($dll in $dlls) {
+                $Ext += $dll.FullName
+            }
+        }
+    }
+    if ($ExtPathAll) {
+        foreach ($path in $ExtPathAll) {
+            $dlls = Get-ChildItem -Path $path -Recurse -Filter "*.dll"
+            foreach ($dll in $dlls) {
+                $Ext += $dll.FullName
+            }
+        }
+    }
+    if (-not $WithoutCodeEval) {
+        $Ext += "C:\Users\filip\dev\Datio.Tools.CodeEval\bin\Debug\net8\Datio.Tools.CodeEval.dll"
+    }
+    $tempAssemblyFolder = $null
+    if ($Ext) {
+        $tempAssemblyFolder = Join-Path -Path $env:TEMP -ChildPath "SonetaExplorerExt"
+        if (Test-Path -Path $tempAssemblyFolder) {
+            Remove-Item -Path $tempAssemblyFolder -Recurse -Force
+        }
+
+        New-Item -ItemType Directory -Path $tempAssemblyFolder -Force | Out-Null
+
+        foreach ($e in $Ext) {
+            Copy-Item $e $tempAssemblyFolder
+        }
+        $paramList += "--extpath"
+        $paramList += "`"$tempAssemblyFolder`""
+
+    }
+    if ($NoDbExtensions) {
+        $paramList += "--nodbextensions"
+    }
+
+    $keyColor = 'Cyan'
+    $valueColor = 'DarkMagenta'
+
+    Write-Host "Argument list" -NoNewline -ForegroundColor $keyColor
+    Write-Host "  $paramList" -ForegroundColor $valueColor
+
+    if ($paramList -contains "--extpath" -and $tempAssemblyFolder) {
+        Write-Host "Loaded extensions from folder" -NoNewline -ForegroundColor $keyColor
+        Write-Host " $tempAssemblyFolder" -ForegroundColor $valueColor
+        foreach ($dll in Get-ChildItem -Path $tempAssemblyFolder -Filter "*.dll") {
+            Write-Host "`t- $($dll.Name)" -ForegroundColor $valueColor
+        }
+    }
+
+    Start-Process -FilePath $exePath -ArgumentList $paramList -WorkingDirectory $sonetaExplorer.FullName
+}
+
+function Invoke-InEnovaDbs {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Query
+    )
+
+    if (-not $Query) {
+        throw "Empty Query"
+    }
+
+    dbmgr list -o json | ConvertFrom-Json | ForEach-Object {
+        Write-Output $_.Database
+
+        Invoke-Sqlcmd `
+            -Query $Query `
+            -Database $_.Database `
+            -ServerInstance 'acer\enova' `
+            -TrustServerCertificate
+        | Format-Table
+    }
+}
+
+#
+# Clipboard files operations
+#
+
 function Copy-FilesToClipboard {
     param(
-        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName, ValueFromRemainingArguments = $true)]
         [string[]]$Path
     )
     Add-Type -AssemblyName System.Windows.Forms
@@ -301,3 +363,4 @@ function Copy-FilesToClipboard {
     }
     [System.Windows.Forms.Clipboard]::SetFileDropList($files)
 }
+
